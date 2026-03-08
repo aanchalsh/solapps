@@ -36,6 +36,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@solana/actions": "^1.6.6",
     "@solana/client": "^1.2.0",
     "@solana/kit": "^5.1.0",
     "@solana/react-hooks": "^1.1.5",
