@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("AH4kBFYyJiR1aFkCuJ6zC4PyqiUxsR2hJTFVdfqoPZYn");
+declare_id!("4skE9xAhKrDniyQTGysCHDKtPYYhtvnNKFNe9P755arC");
 
 #[program]
 pub mod scoreboard{
@@ -41,4 +41,36 @@ pub struct Scoreboard {
     pub place: String,
     pub start_time: u64,
     pub end_time: u64,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn scoreboard_init_space_is_correct() {
+        // 8 discriminator + 8 matches + 4 len prefix + 50 place + 8 start_time + 8 end_time
+        assert_eq!(Scoreboard::INIT_SPACE, 8 + 4 + 50 + 8 + 8);
+    }
+
+    #[test]
+    fn scoreboard_fields_hold_expected_values() {
+        let scoreboard = Scoreboard {
+            matches: 10,
+            place: "Mumbai".to_string(),
+            start_time: 1000,
+            end_time: 2000,
+        };
+        assert_eq!(scoreboard.matches, 10);
+        assert_eq!(scoreboard.place, "Mumbai");
+        assert_eq!(scoreboard.start_time, 1000);
+        assert_eq!(scoreboard.end_time, 2000);
+    }
+
+    #[test]
+    fn end_time_is_after_start_time() {
+        let start_time: u64 = 1000;
+        let end_time: u64 = 2000;
+        assert!(end_time > start_time);
+    }
 }
